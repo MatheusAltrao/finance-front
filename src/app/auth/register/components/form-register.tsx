@@ -1,5 +1,6 @@
 "use client";
 
+import formFooter from "@/components/auth/form-footer";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,7 +17,6 @@ import {
 } from "@/schemas/auth/register.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { formFooter } from "../../layout";
 
 export default function FormRegister() {
   const form = useForm<FormRegisterSchemaProps>({
