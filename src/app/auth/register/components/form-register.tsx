@@ -15,8 +15,8 @@ import {
   FormRegisterSchemaProps,
 } from "@/schemas/auth/register.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { formFooter } from "../../layout";
 
 export default function FormRegister() {
   const form = useForm<FormRegisterSchemaProps>({
@@ -84,23 +84,7 @@ export default function FormRegister() {
           Criar conta
         </Button>
       </form>
-      <div className="flex items-center flex-col gap-1 mt-4">
-        <div className=" text-center text-sm">
-          Já possui uma conta?{" "}
-          <Link href="/auth/sign-in" className="underline underline-offset-4">
-            Entrar
-          </Link>
-        </div>
-
-        <div className=" text-center text-sm">
-          <Link
-            href="/auth/reset-password"
-            className="underline underline-offset-4"
-          >
-            Esqueceu a senha ?
-          </Link>
-        </div>
-      </div>
+      {formFooter("register")}
     </Form>
   );
 }

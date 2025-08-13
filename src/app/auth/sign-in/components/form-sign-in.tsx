@@ -15,8 +15,8 @@ import {
   FormSignInSchemaProps,
 } from "@/schemas/auth/sign-in.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { formFooter } from "../../layout";
 
 export default function FormSignIn() {
   const form = useForm<FormSignInSchemaProps>({
@@ -70,23 +70,7 @@ export default function FormSignIn() {
           Entrar
         </Button>
       </form>
-      <div className="flex items-center flex-col gap-1 mt-4">
-        <div className=" text-center text-sm">
-          Não tem uma conta?{" "}
-          <Link href="/auth/register" className="underline underline-offset-4">
-            Criar uma conta
-          </Link>
-        </div>
-
-        <div className=" text-center text-sm">
-          <Link
-            href="/auth/reset-password"
-            className="underline underline-offset-4"
-          >
-            Esqueceu a senha ?
-          </Link>
-        </div>
-      </div>
+      {formFooter("sign-in")}
     </Form>
   );
 }

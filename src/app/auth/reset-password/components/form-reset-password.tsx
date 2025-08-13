@@ -15,8 +15,8 @@ import {
   FormResetPasswordSchemaProps,
 } from "@/schemas/auth/reset-password.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { formFooter } from "../../layout";
 
 export default function FormResetPassword() {
   const form = useForm<FormResetPasswordSchemaProps>({
@@ -52,21 +52,7 @@ export default function FormResetPassword() {
           Redefinir senha
         </Button>
       </form>
-      <div className="flex items-center flex-col gap-1 mt-4">
-        <div className=" text-center text-sm">
-          Não tem uma conta?{" "}
-          <Link href="/auth/register" className="underline underline-offset-4">
-            Criar uma conta
-          </Link>
-        </div>
-
-        <div className=" text-center text-sm">
-          Já possui uma conta?{" "}
-          <Link href="/auth/sign-in" className="underline underline-offset-4">
-            Entrar
-          </Link>
-        </div>
-      </div>
+      {formFooter("reset-password")}
     </Form>
   );
 }
