@@ -16,6 +16,7 @@ import {
   FormSignInSchemaProps,
 } from "@/schemas/auth/sign-in.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DoorOpen } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export default function FormSignIn() {
@@ -67,7 +68,7 @@ export default function FormSignIn() {
           />
         </div>
         <Button className="w-full" type="submit">
-          Entrar
+          <DoorOpen size={20} /> Entrar
         </Button>
       </form>
       {formFooter("sign-in")}

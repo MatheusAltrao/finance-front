@@ -16,6 +16,7 @@ import {
   FormResetPasswordSchemaProps,
 } from "@/schemas/auth/reset-password.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Lock } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export default function FormResetPassword() {
@@ -49,7 +50,7 @@ export default function FormResetPassword() {
           />
         </div>
         <Button className="w-full" type="submit">
-          Redefinir senha
+          <Lock size={20} /> Redefinir senha
         </Button>
       </form>
       {formFooter("reset-password")}

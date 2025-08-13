@@ -16,6 +16,7 @@ import {
   FormRegisterSchemaProps,
 } from "@/schemas/auth/register.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export default function FormRegister() {
@@ -81,7 +82,7 @@ export default function FormRegister() {
           />
         </div>
         <Button className="w-full" type="submit">
-          Criar conta
+          <Plus size={20} /> Criar conta
         </Button>
       </form>
       {formFooter("register")}
