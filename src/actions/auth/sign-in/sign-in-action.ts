@@ -2,19 +2,11 @@
 
 import { encrypt } from "@/helpers/jwt";
 import { createSession } from "@/helpers/session";
+import { SignInResponseProps } from "@/types/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-interface SignInFormResponseProps {
-  type: string;
-  value: string;
-  user: {
-    id: number;
-    email: string;
-  };
-}
-
-export async function signInFormAction(data: SignInFormResponseProps) {
+export async function signInAction(data: SignInResponseProps) {
   if (!data) {
     throw new Error("User not found");
   }

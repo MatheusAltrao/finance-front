@@ -1,6 +1,6 @@
 "use client";
 
-import { signInFormAction } from "@/actions/auth/sign-in/sign-in-form-action";
+import { signInAction } from "@/actions/auth/sign-in/sign-in-action";
 import formFooter from "@/components/auth/form-footer";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,20 +17,13 @@ import {
   FormSignInSchema,
   FormSignInSchemaProps,
 } from "@/schemas/auth/sign-in.schema";
+import { SignInResponseProps } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DoorOpen } from "lucide-react";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export interface SignInFormResponseProps {
-  type: string;
-  value: string;
-  user: {
-    id: number;
-    email: string;
-  };
-}
 export default function FormSignIn() {
   const [isPending, startTransition] = useTransition();
 
@@ -60,9 +53,9 @@ export default function FormSignIn() {
         );
 
         const data = await response.json();
-        const user = data as SignInFormResponseProps;
+        const user = data as SignInResponseProps;
 
-        await signInFormAction(user);
+        await signInAction(user);
         console.log("User logged in successfully:", data);
         toast.success("Seja bem vindo!");
       } catch (error) {

@@ -8,7 +8,7 @@ export default async function Middleware(request: NextRequest) {
 
   const res = NextResponse.next();
   if (updatedSession.value !== null) {
-    res.cookies.set(updatedSession.name, updatedSession.value.session, {
+    res.cookies.set(updatedSession.name, updatedSession.value, {
       expires: updatedSession.expires,
       httpOnly: updatedSession.httpOnly,
     });
