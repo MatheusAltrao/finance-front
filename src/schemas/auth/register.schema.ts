@@ -5,7 +5,7 @@ export const FormRegisterSchema = z.object({
   password: z
     .string()
     .trim()
-    .min(6, { message: "Senha inválida" })
+    .min(8, { message: "Senha inválida" })
     .max(50, { message: "Senha inválida" }),
   name: z
     .string()
