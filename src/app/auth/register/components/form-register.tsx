@@ -54,6 +54,8 @@ export default function FormRegister() {
         );
 
         const data = await response.json();
+        console.log(data);
+        // não deixar criar com o mesmo email
         toast.success("Conta criada com sucesso!");
         form.reset();
         redirect("/auth/sign-in");
