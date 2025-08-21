@@ -14,7 +14,7 @@ interface SignInFormResponseProps {
   };
 }
 
-export default async function signInFormAction(data: SignInFormResponseProps) {
+export async function signInFormAction(data: SignInFormResponseProps) {
   if (!data) {
     throw new Error("User not found");
   }

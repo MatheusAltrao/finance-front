@@ -1,4 +1,3 @@
-import { getSession } from "@/helpers/session";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Toaster } from "react-hot-toast";
@@ -19,12 +18,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getSession();
-
-  if (!user) {
-    console.log("NO USER LAYOUT");
-  }
-
   return (
     <html lang="pt-br">
       <body className={`${poppins.className} dark antialiased`}>

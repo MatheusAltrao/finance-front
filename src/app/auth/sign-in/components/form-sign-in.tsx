@@ -1,6 +1,6 @@
 "use client";
 
-import signInFormAction from "@/actions/auth/sign-in/sign-in-form-action";
+import { signInFormAction } from "@/actions/auth/sign-in/sign-in-form-action";
 import formFooter from "@/components/auth/form-footer";
 import { Button } from "@/components/ui/button";
 import {
