@@ -10,8 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Barbearias 3L",
-  description: "Barbearias 3L",
+  title: "FinanceApp",
+  description: "FinanceApp",
 };
 
 export default async function RootLayout({
@@ -19,13 +19,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const token = await getSession();
+  const user = await getSession();
 
-  if (!token) {
+  if (!user) {
     console.log("NO USER LAYOUT");
   }
-
-  console.log("USER LAYOUT", token);
 
   return (
     <html lang="pt-br">

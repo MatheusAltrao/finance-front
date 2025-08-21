@@ -19,12 +19,11 @@ import {
 } from "@/schemas/auth/sign-in.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DoorOpen } from "lucide-react";
-import { redirect } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-interface SignInFormResponseProps {
+export interface SignInFormResponseProps {
   type: string;
   value: string;
   user: {
@@ -62,12 +61,10 @@ export default function FormSignIn() {
 
         const data = await response.json();
         const user = data as SignInFormResponseProps;
-        const token = user.value;
 
-        await signInFormAction(token);
+        await signInFormAction(user);
         console.log("User logged in successfully:", data);
         toast.success("Seja bem vindo!");
-        redirect("/");
       } catch (error) {
         console.error("Error logging in:", error);
         toast.error("Erro ao fazer login. Tente novamente.");

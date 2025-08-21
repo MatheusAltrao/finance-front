@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
+import { decrypt, encrypt } from "./jwt";
 
-const SESSION_NAME = "session-finance";
+const SESSION_NAME = "session";
 export const generateExpires = () => new Date(Date.now() + 60 * 60 * 60); // 1 hora
 
 export const createSession = async (payload: string) => {
@@ -13,9 +14,9 @@ export const getSession = async () => {
 
   if (!session) return null;
 
-  const token = session;
+  const decryptedSession = await decrypt(session);
 
-  return token;
+  return decryptedSession;
 };
 
 export const updateSession = async () => {
@@ -24,7 +25,7 @@ export const updateSession = async () => {
 
   const expires = generateExpires();
 
-  const jwt = { session, expires };
+  const jwt = await encrypt({ ...session, expires });
 
   const updatedSession = {
     name: SESSION_NAME,
