@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Loading from "@/components/ui/loading";
 import {
   FormRegisterSchema,
   FormRegisterSchemaProps,
@@ -110,8 +111,8 @@ export default function FormRegister() {
             )}
           />
         </div>
-        <Button className="w-full" type="submit">
-          <Plus size={20} /> Criar conta
+        <Button disabled={isPending} className="w-full" type="submit">
+          {isPending ? <Loading /> : <Plus size={20} />} Criar conta
         </Button>
       </form>
       {formFooter("register")}
