@@ -18,6 +18,7 @@ import {
 } from "@/schemas/auth/register.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
+import { redirect } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -38,7 +39,7 @@ export default function FormRegister() {
     startTransition(async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/v1/user`,
+          `${process.env.NEXT_PUBLIC_API_URL}/user`,
           {
             method: "POST",
             headers: {
@@ -54,8 +55,8 @@ export default function FormRegister() {
 
         const data = await response.json();
         toast.success("Conta criada com sucesso!");
-        console.log("Account created successfully:", data);
-        /* form.reset(); */
+        form.reset();
+        redirect("/auth/sign-in");
       } catch (error) {
         console.error("Error creating account:", error);
         toast.error("Erro ao criar conta. Tente novamente.");
