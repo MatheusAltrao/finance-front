@@ -1,3 +1,4 @@
+import { UserProps } from "@/types/auth";
 import { cookies } from "next/headers";
 import { decrypt, encrypt } from "./jwt";
 
@@ -16,7 +17,7 @@ export const getSession = async () => {
 
   const decryptedSession = await decrypt(session);
 
-  return decryptedSession;
+  return decryptedSession as UserProps | null;
 };
 
 export const updateSession = async () => {

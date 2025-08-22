@@ -16,7 +16,7 @@ export async function signInAction(data: SignInResponseProps) {
   const payload = {
     id: data.user.id,
     email: data.user.email,
-    /*   name: data.user.name,  */
+    name: data.user.name,
     type: "Bearer",
     value: data.value,
   };
