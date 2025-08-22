@@ -34,5 +34,5 @@ export async function signInAction(data: SignInResponseProps) {
   await createSession(jwt);
 
   revalidatePath("/");
-  redirect("/");
+  redirect("/dashboard");
 }
