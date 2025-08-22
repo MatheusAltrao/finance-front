@@ -11,6 +11,8 @@ export async function signInAction(data: SignInResponseProps) {
     throw new Error("User not found");
   }
 
+  console.log("Data received in signInAction:", data);
+
   const payload = {
     id: data.user.id,
     email: data.user.email,

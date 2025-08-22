@@ -19,12 +19,13 @@ import {
 } from "@/schemas/auth/sign-in.schema";
 import { SignInResponseProps } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DoorOpen } from "lucide-react";
-import { useTransition } from "react";
+import { DoorOpen, Eye, EyeOff } from "lucide-react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export default function FormSignIn() {
+  const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormSignInSchemaProps>({
@@ -89,11 +90,21 @@ export default function FormSignIn() {
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="••••••••••••"
-                    {...field}
-                  />
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••••••"
+                      {...field}
+                    />
+
+                    <button
+                      type="button"
+                      className="absolute right-3 top-3"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
