@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Banknote, Goal, Home, PiggyBank, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -16,28 +16,32 @@ import Link from "next/link";
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
+    title: "Início",
+    url: "/dashboard",
     icon: Home,
   },
+
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Finanças",
+    url: "/dashboard/finances",
+    icon: Banknote,
   },
+
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Metas",
+    url: "/dashboard/metas",
+    icon: Goal,
   },
+
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
+    title: "Cotações",
+    url: "/dashboard/cotacoes",
+    icon: PiggyBank,
   },
+
   {
-    title: "Settings",
-    url: "#",
+    title: "Configurações",
+    url: "/dashboard/configuracoes",
     icon: Settings,
   },
 ];
