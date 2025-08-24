@@ -20,7 +20,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${poppins.className} dark antialiased`}>
+      <body className={`${poppins.className} antialiased`}>
         <Toaster />
         {children}
       </body>

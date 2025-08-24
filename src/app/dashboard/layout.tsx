@@ -17,7 +17,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <AppSidebar user={user} />
-      <main>
+      <main className="w-full p-2">
         <SidebarTrigger />
         {children}
       </main>
