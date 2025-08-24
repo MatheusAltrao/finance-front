@@ -17,7 +17,7 @@ export const getSession = async () => {
 
   const decryptedSession = await decrypt(session);
 
-  return decryptedSession as UserProps | null;
+  return decryptedSession as UserProps;
 };
 
 export const updateSession = async () => {
