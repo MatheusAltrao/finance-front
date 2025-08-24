@@ -1,4 +1,12 @@
-import { Banknote, Goal, Home, PiggyBank, Settings } from "lucide-react";
+import {
+  Banknote,
+  CreditCard,
+  Goal,
+  Home,
+  Landmark,
+  PiggyBank,
+  Settings,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -28,20 +36,32 @@ const items = [
   },
 
   {
+    title: "Bancos",
+    url: "/dashboard/banks",
+    icon: Landmark,
+  },
+
+  {
+    title: "Cartões",
+    url: "/dashboard/cards",
+    icon: CreditCard,
+  },
+
+  {
     title: "Metas",
-    url: "/dashboard/metas",
+    url: "/dashboard/goals",
     icon: Goal,
   },
 
   {
     title: "Cotações",
-    url: "/dashboard/cotacoes",
+    url: "/dashboard/quotes",
     icon: PiggyBank,
   },
 
   {
     title: "Configurações",
-    url: "/dashboard/configuracoes",
+    url: "/dashboard/settings",
     icon: Settings,
   },
 ];
