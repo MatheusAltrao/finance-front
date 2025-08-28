@@ -3,7 +3,7 @@ import { ChartAreaDefault } from "@/components/charts/chart-area-default";
 export default async function DashboardPage() {
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-1 gap-2 lg:grid-cols-4">
         <div className="flex flex-col gap-2 rounded-lg border bg-accent p-4">
           <span className="text-sm text-muted-foreground">Total Revenue</span>
           <span className="text-lg font-semibold">$15,231.89</span>
@@ -37,7 +37,7 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
         <ChartAreaDefault />
         <ChartAreaDefault />
       </div>

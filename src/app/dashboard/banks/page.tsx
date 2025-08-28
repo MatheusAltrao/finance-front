@@ -75,7 +75,7 @@ export default async function BanksPage() {
   const userBanks = await getUserBank(session?.value || "");
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
       <Dialog>
         <DialogTrigger asChild>
           <Card className="flex h-[220px] cursor-pointer flex-col items-center justify-center bg-accent transition-colors hover:bg-primary hover:text-white">
@@ -96,7 +96,7 @@ export default async function BanksPage() {
           </DialogHeader>
 
           <div>
-            <ul>
+            <ul className="h-[420px] space-y-2 overflow-y-auto">
               {bankList.map((bank) => (
                 <li
                   key={bank.id}
