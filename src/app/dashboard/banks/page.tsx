@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,9 +14,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getSession } from "@/helpers/session";
-import { PlusCircle } from "lucide-react";
+import { Plus, PlusCircle } from "lucide-react";
 import Image from "next/image";
-import AddExpanse from "./components/add-expanse";
 
 interface BankProps {
   id: number;
@@ -139,7 +139,9 @@ export default async function BanksPage() {
           </CardContent>
 
           <CardFooter>
-            <AddExpanse />
+            <Button variant="secondary" className="w-full">
+              <Plus /> Adicionar despesa
+            </Button>
           </CardFooter>
         </Card>
       ))}

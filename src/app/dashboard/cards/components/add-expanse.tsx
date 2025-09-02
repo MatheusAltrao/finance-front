@@ -28,26 +28,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { formatDate } from "@/helpers/format-date";
+import { AddExpanseSchema, IAddExpanseSchema } from "@/schemas/expense";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function AddExpanse() {
-  const AddExpanseSchema = z.object({
-    totalAmount: z
-      .string()
-      .min(1, "O valor deve ser maior que zero")
-      .regex(/^\d+([.,]\d{1,2})?$/, "Formato inválido (ex: 100.50)"),
-    date: z.string().min(1, "A data é obrigatória"),
-    description: z.string().min(1, "A descrição é obrigatória"),
-    installments: z
-      .string()
-      .min(1, "As parcelas são obrigatórias")
-      .regex(/^\d+$/, "O valor deve conter apenas números"),
-  });
-
-  type IAddExpanseSchema = z.infer<typeof AddExpanseSchema>;
-
   const form = useForm<IAddExpanseSchema>({
     resolver: zodResolver(AddExpanseSchema),
     defaultValues: {
@@ -58,9 +46,35 @@ export default function AddExpanse() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof AddExpanseSchema>) {
-    console.log("Formulário enviado com sucesso:", values);
-    // Aqui você pode adicionar a lógica para enviar os dados para a API
+  async function onSubmit(values: z.infer<typeof AddExpanseSchema>) {
+    try {
+      const formData = {
+        totalAmount: Number(parseFloat(values.totalAmount.replace(",", "."))),
+        date: formatDate(values.date),
+        description: values.description,
+        installments: Number(parseInt(values.installments, 10)),
+      };
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/card/expense`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      toast.success("Despesa adicionada com sucesso!");
+    } catch (error) {
+      console.log("Erro ao adicionar despesa:", error);
+      toast.error("Erro ao adicionar despesa. Tente novamente.");
+    }
   }
 
   return (
