@@ -12,7 +12,7 @@ export const encrypt = async (payload: any) => {
   const result = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("1h")
+    .setExpirationTime("24h")
     .sign(secretKey);
 
   return result;

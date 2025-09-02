@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { decrypt, encrypt } from "./jwt";
 
 const SESSION_NAME = "session";
-export const generateExpires = () => new Date(Date.now() + 60 * 60 * 60); // 1 hora
+export const generateExpires = () => new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 horas
 
 export const createSession = async (payload: string) => {
   const expires = generateExpires();
