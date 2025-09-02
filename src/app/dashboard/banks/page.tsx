@@ -14,24 +14,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getSession } from "@/helpers/session";
+import { BankProps, UserBankProps } from "@/types/banks";
 import { Plus, PlusCircle } from "lucide-react";
 import Image from "next/image";
-
-interface BankProps {
-  id: number;
-  name: string;
-  type: string;
-  logoUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface UserBankProps {
-  balance: string;
-  name: string;
-  logo: string;
-  type: string;
-}
 
 async function getBankList() {
   try {

@@ -8,7 +8,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getSession } from "@/helpers/session";
+import { UserBankProps } from "@/types/banks";
 import { PlusCircle } from "lucide-react";
+import AddCreditCard from "./components/add-credit-card";
 
 interface CardListResponseProps {
   id: number;
@@ -37,9 +39,34 @@ async function fetchCardList(token: string) {
   }
 }
 
+async function getUserBank(token: string) {
+  if (!token) {
+    throw new Error("Token is required");
+  }
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/accounts`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    const data = await response.json();
+
+    return data as UserBankProps[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
 export default async function CardsPage() {
   const session = await getSession();
   const cards = await fetchCardList(session?.value || "");
+  const banks = await getUserBank(session?.value || "");
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
@@ -61,6 +88,8 @@ export default async function CardsPage() {
               suas despesas.
             </DialogDescription>
           </DialogHeader>
+
+          <AddCreditCard banks={banks} token={session?.value} />
         </DialogContent>
       </Dialog>
 
