@@ -19,6 +19,7 @@ async function fetchStocks() {
 
 export default async function QuotesPage() {
   const quotes: QuoteProps = await fetchStocks()
+  console.log(quotes)
   const currencies = quotes.results.currencies
   const stocks = quotes.results.stocks
 
@@ -29,8 +30,8 @@ export default async function QuotesPage() {
     <div className="flex flex-col gap-8">
       <section className="space-y-4">
         <div>
-          <h1 className="font-semibold text-lg">Moedas</h1>
-          <p className="text-muted-foreground text-sm">
+          <h1 className="text-lg font-semibold">Moedas</h1>
+          <p className="text-sm text-muted-foreground">
             Veja as principais cotações de moedas atualizadas em tempo real.
           </p>
         </div>
@@ -42,8 +43,8 @@ export default async function QuotesPage() {
       </section>
       <section className="space-y-4">
         <div>
-          <h1 className="font-semibold text-lg">Ações</h1>
-          <p className="text-muted-foreground text-sm">
+          <h1 className="text-lg font-semibold">Ações</h1>
+          <p className="text-sm text-muted-foreground">
             Veja as principais cotações de ações atualizadas em tempo real.
           </p>
         </div>

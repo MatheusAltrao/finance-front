@@ -1,6 +1,14 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+'use client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { Calendar as CalendarIcon, Plus } from 'lucide-react'
+import { useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import type { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import {
   Dialog,
   DialogContent,
@@ -8,81 +16,59 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import Loading from "@/components/ui/loading";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { formatDate } from "@/helpers/format-date";
-import { AddExpanseSchema, type IAddExpanseSchema } from "@/schemas/expense";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { Calendar as CalendarIcon, Plus } from "lucide-react";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import type { z } from "zod";
+} from '@/components/ui/dialog'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import Loading from '@/components/ui/loading'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { formatDate } from '@/helpers/format-date'
+import { AddExpanseSchema, type IAddExpanseSchema } from '@/schemas/expense'
 
 interface AddExpanseProps {
-  cardId: number;
-  token: string;
+  cardId: number
+  token: string
 }
 
 export default function AddExpanse({ cardId, token }: AddExpanseProps) {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
   const form = useForm<IAddExpanseSchema>({
     resolver: zodResolver(AddExpanseSchema),
     defaultValues: {
-      totalAmount: "",
+      totalAmount: '',
       date: new Date().toISOString(),
-      description: "",
-      installments: "1",
+      description: '',
+      installments: '1',
     },
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof AddExpanseSchema>) {
     startTransition(async () => {
       try {
         const formData = {
           cardId: cardId,
-          totalAmount: Number(parseFloat(values.totalAmount.replace(",", "."))),
+          totalAmount: Number(parseFloat(values.totalAmount.replace(',', '.'))),
           date: formatDate(values.date),
           installments: Number(parseInt(values.installments, 10)),
           description: values.description,
-        };
+        }
 
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/card/expense`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card/expense`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
-        );
+          body: JSON.stringify(formData),
+        })
 
-        await response.json();
+        await response.json()
 
-        toast.success("Despesa adicionada com sucesso!");
+        toast.success('Despesa adicionada com sucesso!')
       } catch (error) {
-        console.log("Erro ao adicionar despesa:", error);
-        toast.error("Erro ao adicionar despesa. Tente novamente.");
+        console.log('Erro ao adicionar despesa:', error)
+        toast.error('Erro ao adicionar despesa. Tente novamente.')
       }
-    });
+    })
   }
 
   return (
@@ -95,9 +81,7 @@ export default function AddExpanse({ cardId, token }: AddExpanseProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Adicionar despesa</DialogTitle>
-          <DialogDescription>
-            Preencha o formulário e adicione uma nova despesa.
-          </DialogDescription>
+          <DialogDescription>Preencha o formulário e adicione uma nova despesa.</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -124,10 +108,7 @@ export default function AddExpanse({ cardId, token }: AddExpanseProps) {
                   <FormItem>
                     <FormLabel>Parcelas</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Parcelado em quantas vezes"
-                        {...field}
-                      />
+                      <Input placeholder="Parcelado em quantas vezes" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -164,7 +145,7 @@ export default function AddExpanse({ cardId, token }: AddExpanseProps) {
                           >
                             <CalendarIcon />
                             {field.value ? (
-                              format(new Date(field.value), "PPP", {
+                              format(new Date(field.value), 'PPP', {
                                 locale: ptBR,
                               })
                             ) : (
@@ -172,18 +153,11 @@ export default function AddExpanse({ cardId, token }: AddExpanseProps) {
                             )}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent
-                          side="top"
-                          className="w-auto overflow-hidden p-0"
-                        >
+                        <PopoverContent side="top" className="w-auto overflow-hidden p-0">
                           <Calendar
                             mode="single"
-                            selected={
-                              field.value ? new Date(field.value) : undefined
-                            }
-                            onSelect={(date) =>
-                              field.onChange(date?.toISOString())
-                            }
+                            selected={field.value ? new Date(field.value) : undefined}
+                            onSelect={(date) => field.onChange(date?.toISOString())}
                             required
                           />
                         </PopoverContent>
@@ -201,5 +175,5 @@ export default function AddExpanse({ cardId, token }: AddExpanseProps) {
         </Form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
