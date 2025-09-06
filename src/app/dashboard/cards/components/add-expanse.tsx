@@ -65,8 +65,6 @@ export default function AddExpanse({ cardId, token }: AddExpanseProps) {
           description: values.description,
         };
 
-        console.log(formData);
-
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/card/expense`,
           {
