@@ -41,7 +41,7 @@ export default function FormRegister() {
           }),
         })
 
-        const data = await response.json()
+        await response.json()
         toast.success('Conta criada com sucesso!')
         form.reset()
         redirect('/auth/sign-in')

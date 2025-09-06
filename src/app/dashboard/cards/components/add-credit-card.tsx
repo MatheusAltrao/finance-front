@@ -1,82 +1,66 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import Loading from "@/components/ui/loading";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { AddCreditCardSchema, type IAddCreditCardSchema } from "@/schemas/card";
-import type { UserBankProps } from "@/types/banks";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Plus } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import Loading from '@/components/ui/loading'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { AddCreditCardSchema, type IAddCreditCardSchema } from '@/schemas/card'
+import type { UserBankProps } from '@/types/banks'
 
 interface AddCreditCardProps {
-  banks: UserBankProps[];
-  token: string | undefined;
+  banks: UserBankProps[]
+  token: string | undefined
 }
 
 export default function AddCreditCard({ banks, token }: AddCreditCardProps) {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<IAddCreditCardSchema>({
     resolver: zodResolver(AddCreditCardSchema),
     defaultValues: {
-      accountId: "",
-      dayClosing: "",
-      dayMaturity: "",
-      limit: "",
+      accountId: '',
+      dayClosing: '',
+      dayMaturity: '',
+      limit: '',
     },
-  });
+  })
 
   async function onSubmit(values: IAddCreditCardSchema) {
     const formData = {
       accountId: Number(values.accountId),
       dayClosing: values.dayClosing,
       dayMaturity: values.dayMaturity,
-      limit: Number(parseFloat(values.limit.replace(",", "."))),
-    };
+      limit: Number(parseFloat(values.limit.replace(',', '.'))),
+    }
 
     startTransition(async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/card`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
-        );
+          body: JSON.stringify(formData),
+        })
 
-        const data = await response.json();
-        console.log(data);
-        toast.success("Cartão adicionado com sucesso!");
-        router.refresh();
+        const data = await response.json()
+        console.log(data)
+        toast.success('Cartão adicionado com sucesso!')
+        router.refresh()
       } catch (error) {
-        console.log("Erro ao adicionar cartão:", error);
-        toast.error("Erro ao adicionar cartão. Tente novamente.");
+        console.log('Erro ao adicionar cartão:', error)
+        toast.error('Erro ao adicionar cartão. Tente novamente.')
       }
-    });
+    })
   }
 
   return (
@@ -90,10 +74,7 @@ export default function AddCreditCard({ banks, token }: AddCreditCardProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Selecione sua conta bancária</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Selecione o seu banco" />
@@ -159,5 +140,5 @@ export default function AddCreditCard({ banks, token }: AddCreditCardProps) {
         </form>
       </Form>
     </div>
-  );
+  )
 }
