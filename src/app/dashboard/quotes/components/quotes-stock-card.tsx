@@ -1,23 +1,23 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { formatCurrency } from "@/helpers/format-currency";
-import { CurrencyDataProps } from "@/types/quotes";
+import { StocksProps } from "@/types/quotes";
 import { TrendingUp } from "lucide-react";
 
-interface CurrencyCardProps {
-  data: CurrencyDataProps;
+interface QuotesStockCardProps {
+  data: StocksProps;
 }
 
-export function QuotesCurrencyCard({ data }: CurrencyCardProps) {
+export function QuotesStockCard({ data }: QuotesStockCardProps) {
   const isPositive = data.variation > 0;
 
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex items-start justify-between gap-2">
+          <div className="w-full truncate">
             <h3 className="truncate font-medium text-foreground">
               {data.name}
             </h3>
+            <p className="text-sm text-muted-foreground">{data.location}</p>
           </div>
           <TrendingUp
             size={20}
@@ -27,7 +27,6 @@ export function QuotesCurrencyCard({ data }: CurrencyCardProps) {
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-2">
-          <span>{formatCurrency(data.buy)}</span>
           <span className={`${isPositive ? "text-green-500" : "text-red-500"}`}>
             ({data.variation}%)
           </span>

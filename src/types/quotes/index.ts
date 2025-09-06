@@ -4,12 +4,7 @@ export interface QuoteProps {
 
 export interface ResultsProps {
   currencies: CurrenciesProps;
-  stocks: {
-    name: string;
-    location: string;
-    points: number;
-    variation: number;
-  };
+  stocks: StocksProps;
   available_sources: string[];
   taxes: any[];
 }
@@ -31,5 +26,12 @@ export interface CurrencyDataProps {
   name: string;
   buy: number;
   sell: number;
+  variation: number;
+}
+
+export interface StocksProps {
+  name: string;
+  location: string;
+  points: number;
   variation: number;
 }

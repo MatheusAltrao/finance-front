@@ -1,6 +1,7 @@
-import { formatCurrencies } from "@/helpers/format-quotes";
-import { QuoteProps } from "@/types/quotes";
+import { formatCurrencies, formatStocks } from "@/helpers/format-quotes";
+import { QuoteProps, StocksProps } from "@/types/quotes";
 import { QuotesCurrencyCard } from "./components/quotes-currency-card";
+import { QuotesStockCard } from "./components/quotes-stock-card";
 
 async function fetchStocks() {
   try {
@@ -18,30 +19,39 @@ async function fetchStocks() {
 
 export default async function QuotesPage() {
   const quotes: QuoteProps = await fetchStocks();
+  const currencies = quotes.results.currencies;
   const stocks = quotes.results.stocks;
 
-  console.log(stocks);
-
-  const formattedCurrencies = formatCurrencies(quotes.results.currencies);
+  const formattedCurrencies = formatCurrencies(currencies);
+  const formattedStocks: StocksProps[] = formatStocks(stocks);
 
   return (
     <div className="flex flex-col gap-8">
       <section className="space-y-4">
         <div>
           <h1 className="text-lg font-semibold">Moedas</h1>
-          <p className="text-sm">
+          <p className="text-sm text-muted-foreground">
             Veja as principais cotações de moedas atualizadas em tempo real.
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {formattedCurrencies.map((currency) => (
             <QuotesCurrencyCard key={currency.name} data={currency} />
           ))}
         </div>
       </section>
-      <section>
-        <h2 className="mb-4 text-lg font-semibold">Ações</h2>
-        <div className="grid grid-cols-2 gap-4"></div>
+      <section className="space-y-4">
+        <div>
+          <h1 className="text-lg font-semibold">Ações</h1>
+          <p className="text-sm text-muted-foreground">
+            Veja as principais cotações de ações atualizadas em tempo real.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {formattedStocks.map((stock) => (
+            <QuotesStockCard key={stock.name} data={stock} />
+          ))}
+        </div>
       </section>
     </div>
   );
