@@ -1,56 +1,69 @@
-'use client'
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { DoorOpen, Eye, EyeOff } from 'lucide-react'
-import { useState, useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { signInAction } from '@/actions/auth/sign-in/sign-in-action'
-import formFooter from '@/components/auth/form-footer'
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import Loading from '@/components/ui/loading'
-import { FormSignInSchema, type FormSignInSchemaProps } from '@/schemas/auth/sign-in.schema'
-import type { SignInResponseProps } from '@/types/auth'
+import { signInAction } from "@/actions/auth/sign-in/sign-in-action";
+import formFooter from "@/components/auth/form-footer";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import Loading from "@/components/ui/loading";
+import {
+  FormSignInSchema,
+  type FormSignInSchemaProps,
+} from "@/schemas/auth/sign-in.schema";
+import type { SignInResponseProps } from "@/types/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { DoorOpen, Eye, EyeOff } from "lucide-react";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function FormSignIn() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [isPending, startTransition] = useTransition()
+  const [showPassword, setShowPassword] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormSignInSchemaProps>({
     resolver: zodResolver(FormSignInSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
-  })
+  });
 
   async function onSubmit(values: FormSignInSchemaProps) {
     startTransition(async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: values.email,
+              password: values.password,
+            }),
           },
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password,
-          }),
-        })
+        );
 
-        const data = await response.json()
-        const user = data as SignInResponseProps
+        const data = await response.json();
+        const user = data as SignInResponseProps;
 
-        await signInAction(user)
-        console.log('User logged in successfully:', data)
-        toast.success('Seja bem vindo!')
+        await signInAction(user);
+        console.log("User logged in successfully:", data);
+        toast.success("Seja bem vindo!");
       } catch (error) {
-        console.error('Error logging in:', error)
-        toast.error('Erro ao fazer login. Tente novamente.')
+        console.error("Error logging in:", error);
+        toast.error("Erro ao fazer login. Tente novamente.");
       }
-    })
+    });
   }
 
   return (
@@ -78,11 +91,15 @@ export default function FormSignIn() {
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input type={showPassword ? 'text' : 'password'} placeholder="••••••••••••" {...field} />
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••••••"
+                      {...field}
+                    />
 
                     <button
                       type="button"
-                      className="absolute top-3 right-3"
+                      className="absolute right-3 top-3"
                       onClick={() => setShowPassword((prev) => !prev)}
                     >
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -98,7 +115,7 @@ export default function FormSignIn() {
           {isPending ? <Loading /> : <DoorOpen size={20} />} Entrar
         </Button>
       </form>
-      {formFooter('sign-in')}
+      {formFooter("sign-in")}
     </Form>
-  )
+  );
 }
