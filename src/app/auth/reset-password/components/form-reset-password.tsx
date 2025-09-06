@@ -1,34 +1,24 @@
-"use client";
+'use client'
 
-import formFooter from "@/components/auth/form-footer";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  FormResetPasswordSchema,
-  FormResetPasswordSchemaProps,
-} from "@/schemas/auth/reset-password.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Lock } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Lock } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import formFooter from '@/components/auth/form-footer'
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { FormResetPasswordSchema, type FormResetPasswordSchemaProps } from '@/schemas/auth/reset-password.schema'
 
 export default function FormResetPassword() {
   const form = useForm<FormResetPasswordSchemaProps>({
     resolver: zodResolver(FormResetPasswordSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
-  });
+  })
 
   function onSubmit(values: FormResetPasswordSchemaProps) {
-    console.log(values);
+    console.log(values)
   }
 
   return (
@@ -53,7 +43,7 @@ export default function FormResetPassword() {
           <Lock size={20} /> Redefinir senha
         </Button>
       </form>
-      {formFooter("reset-password")}
+      {formFooter('reset-password')}
     </Form>
-  );
+  )
 }

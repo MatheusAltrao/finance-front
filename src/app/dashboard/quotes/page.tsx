@@ -1,36 +1,36 @@
-import { formatCurrencies, formatStocks } from "@/helpers/format-quotes";
-import { QuoteProps, StocksProps } from "@/types/quotes";
-import { QuotesCurrencyCard } from "./components/quotes-currency-card";
-import { QuotesStockCard } from "./components/quotes-stock-card";
+import { formatCurrencies, formatStocks } from '@/helpers/format-quotes'
+import type { QuoteProps, StocksProps } from '@/types/quotes'
+import { QuotesCurrencyCard } from './components/quotes-currency-card'
+import { QuotesStockCard } from './components/quotes-stock-card'
 
 async function fetchStocks() {
   try {
     const response = await fetch(`https://api.hgbrasil.com/finance`, {
       next: { revalidate: 60 }, // 1 minuto
-    });
+    })
 
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
   } catch (error) {
-    console.log(error);
-    return [];
+    console.log(error)
+    return []
   }
 }
 
 export default async function QuotesPage() {
-  const quotes: QuoteProps = await fetchStocks();
-  const currencies = quotes.results.currencies;
-  const stocks = quotes.results.stocks;
+  const quotes: QuoteProps = await fetchStocks()
+  const currencies = quotes.results.currencies
+  const stocks = quotes.results.stocks
 
-  const formattedCurrencies = formatCurrencies(currencies);
-  const formattedStocks: StocksProps[] = formatStocks(stocks);
+  const formattedCurrencies = formatCurrencies(currencies)
+  const formattedStocks: StocksProps[] = formatStocks(stocks)
 
   return (
     <div className="flex flex-col gap-8">
       <section className="space-y-4">
         <div>
-          <h1 className="text-lg font-semibold">Moedas</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="font-semibold text-lg">Moedas</h1>
+          <p className="text-muted-foreground text-sm">
             Veja as principais cotações de moedas atualizadas em tempo real.
           </p>
         </div>
@@ -42,8 +42,8 @@ export default async function QuotesPage() {
       </section>
       <section className="space-y-4">
         <div>
-          <h1 className="text-lg font-semibold">Ações</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="font-semibold text-lg">Ações</h1>
+          <p className="text-muted-foreground text-sm">
             Veja as principais cotações de ações atualizadas em tempo real.
           </p>
         </div>
@@ -54,5 +54,5 @@ export default async function QuotesPage() {
         </div>
       </section>
     </div>
-  );
+  )
 }

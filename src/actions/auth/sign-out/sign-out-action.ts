@@ -1,9 +1,9 @@
-"use server";
+'use server'
 
-import { deleteSession } from "@/helpers/session";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
+import { deleteSession } from '@/helpers/session'
 
 export async function signOutFormAction() {
-  await deleteSession();
-  redirect("/auth/sign-in");
+  await deleteSession()
+  redirect('/auth/sign-in')
 }

@@ -1,39 +1,31 @@
-import { ChartAreaDefault } from "@/components/charts/chart-area-default";
+import { ChartAreaDefault } from '@/components/charts/chart-area-default'
 
 export default async function DashboardPage() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-4">
         <div className="flex flex-col gap-2 rounded-lg border bg-accent p-4">
-          <span className="text-sm text-muted-foreground">Total Revenue</span>
-          <span className="text-lg font-semibold">$15,231.89</span>
-          <span className="text-sm text-muted-foreground">
-            +20.1% from last month
-          </span>
+          <span className="text-muted-foreground text-sm">Total Revenue</span>
+          <span className="font-semibold text-lg">$15,231.89</span>
+          <span className="text-muted-foreground text-sm">+20.1% from last month</span>
         </div>
 
         <div className="flex flex-col gap-2 rounded-lg border bg-accent p-4">
-          <span className="text-sm text-muted-foreground">Total Revenue</span>
-          <span className="text-lg font-semibold">$15,231.89</span>
-          <span className="text-sm text-muted-foreground">
-            +20.1% from last month
-          </span>
+          <span className="text-muted-foreground text-sm">Total Revenue</span>
+          <span className="font-semibold text-lg">$15,231.89</span>
+          <span className="text-muted-foreground text-sm">+20.1% from last month</span>
         </div>
 
         <div className="flex flex-col gap-2 rounded-lg border bg-accent p-4">
-          <span className="text-sm text-muted-foreground">Total Revenue</span>
-          <span className="text-lg font-semibold">$15,231.89</span>
-          <span className="text-sm text-muted-foreground">
-            +20.1% from last month
-          </span>
+          <span className="text-muted-foreground text-sm">Total Revenue</span>
+          <span className="font-semibold text-lg">$15,231.89</span>
+          <span className="text-muted-foreground text-sm">+20.1% from last month</span>
         </div>
 
         <div className="flex flex-col gap-2 rounded-lg border bg-accent p-4">
-          <span className="text-sm text-muted-foreground">Total Revenue</span>
-          <span className="text-lg font-semibold">$15,231.89</span>
-          <span className="text-sm text-muted-foreground">
-            +20.1% from last month
-          </span>
+          <span className="text-muted-foreground text-sm">Total Revenue</span>
+          <span className="font-semibold text-lg">$15,231.89</span>
+          <span className="text-muted-foreground text-sm">+20.1% from last month</span>
         </div>
       </div>
 
@@ -42,5 +34,5 @@ export default async function DashboardPage() {
         <ChartAreaDefault />
       </div>
     </div>
-  );
+  )
 }

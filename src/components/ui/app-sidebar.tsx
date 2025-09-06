@@ -1,13 +1,5 @@
-import {
-  Banknote,
-  CreditCard,
-  Goal,
-  Home,
-  Landmark,
-  PiggyBank,
-  Settings,
-} from "lucide-react";
-
+import { Banknote, CreditCard, Goal, Home, Landmark, PiggyBank, Settings } from 'lucide-react'
+import Link from 'next/link'
 import {
   Sidebar,
   SidebarContent,
@@ -17,57 +9,56 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { UserProps } from "@/types/auth";
-import Link from "next/link";
+} from '@/components/ui/sidebar'
+import type { UserProps } from '@/types/auth'
 
 // Menu items.
 const items = [
   {
-    title: "Início",
-    url: "/dashboard",
+    title: 'Início',
+    url: '/dashboard',
     icon: Home,
   },
 
   {
-    title: "Finanças",
-    url: "/dashboard/finances",
+    title: 'Finanças',
+    url: '/dashboard/finances',
     icon: Banknote,
   },
 
   {
-    title: "Bancos",
-    url: "/dashboard/banks",
+    title: 'Bancos',
+    url: '/dashboard/banks',
     icon: Landmark,
   },
 
   {
-    title: "Cartões",
-    url: "/dashboard/cards",
+    title: 'Cartões',
+    url: '/dashboard/cards',
     icon: CreditCard,
   },
 
   {
-    title: "Metas",
-    url: "/dashboard/goals",
+    title: 'Metas',
+    url: '/dashboard/goals',
     icon: Goal,
   },
 
   {
-    title: "Cotações",
-    url: "/dashboard/quotes",
+    title: 'Cotações',
+    url: '/dashboard/quotes',
     icon: PiggyBank,
   },
 
   {
-    title: "Configurações",
-    url: "/dashboard/settings",
+    title: 'Configurações',
+    url: '/dashboard/settings',
     icon: Settings,
   },
-];
+]
 
 interface AppSidebarProps {
-  user: UserProps;
+  user: UserProps
 }
 
 export function AppSidebar({ user }: AppSidebarProps) {
@@ -103,5 +94,5 @@ export function AppSidebar({ user }: AppSidebarProps) {
         </div>
       </SidebarContent>
     </Sidebar>
-  );
+  )
 }

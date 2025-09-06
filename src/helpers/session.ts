@@ -1,43 +1,43 @@
-import { UserProps } from "@/types/auth";
-import { cookies } from "next/headers";
-import { decrypt, encrypt } from "./jwt";
+import { cookies } from 'next/headers'
+import type { UserProps } from '@/types/auth'
+import { decrypt, encrypt } from './jwt'
 
-const SESSION_NAME = "session";
-export const generateExpires = () => new Date(Date.now() + 60 * 60 * 60); // 1 hora
+const SESSION_NAME = 'session'
+export const generateExpires = () => new Date(Date.now() + 60 * 60 * 60) // 1 hora
 
 export const createSession = async (payload: string) => {
-  const expires = generateExpires();
-  cookies().set(SESSION_NAME, payload, { expires, httpOnly: true });
-};
+  const expires = generateExpires()
+  cookies().set(SESSION_NAME, payload, { expires, httpOnly: true })
+}
 
 export const getSession = async () => {
-  const session = cookies().get(SESSION_NAME)?.value;
+  const session = cookies().get(SESSION_NAME)?.value
 
-  if (!session) return null;
+  if (!session) return null
 
-  const decryptedSession = await decrypt(session);
+  const decryptedSession = await decrypt(session)
 
-  return decryptedSession as UserProps;
-};
+  return decryptedSession as UserProps
+}
 
 export const updateSession = async () => {
-  const session = await getSession();
-  if (!session) return null;
+  const session = await getSession()
+  if (!session) return null
 
-  const expires = generateExpires();
+  const expires = generateExpires()
 
-  const jwt = await encrypt({ ...session, expires });
+  const jwt = await encrypt({ ...session, expires })
 
   const updatedSession = {
     name: SESSION_NAME,
     value: jwt,
     expires,
     httpOnly: true,
-  };
+  }
 
-  return updatedSession;
-};
+  return updatedSession
+}
 
 export const deleteSession = async () => {
-  cookies().set(SESSION_NAME, "", { expires: new Date(0) });
-};
+  cookies().set(SESSION_NAME, '', { expires: new Date(0) })
+}
