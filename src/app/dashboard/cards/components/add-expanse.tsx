@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Calendar } from "@/components/ui/calendar";
+import Loading from "@/components/ui/loading";
 import {
   Popover,
   PopoverContent,
@@ -33,9 +34,16 @@ import { AddExpanseSchema, IAddExpanseSchema } from "@/schemas/expense";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { useTransition } from "react";
 import toast from "react-hot-toast";
 
-export default function AddExpanse() {
+interface AddExpanseProps {
+  cardId: number;
+  token: string;
+}
+
+export default function AddExpanse({ cardId, token }: AddExpanseProps) {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<IAddExpanseSchema>({
     resolver: zodResolver(AddExpanseSchema),
     defaultValues: {
@@ -47,34 +55,38 @@ export default function AddExpanse() {
   });
 
   async function onSubmit(values: z.infer<typeof AddExpanseSchema>) {
-    try {
-      const formData = {
-        totalAmount: Number(parseFloat(values.totalAmount.replace(",", "."))),
-        date: formatDate(values.date),
-        description: values.description,
-        installments: Number(parseInt(values.installments, 10)),
-      };
+    startTransition(async () => {
+      try {
+        const formData = {
+          cardId: cardId,
+          totalAmount: Number(parseFloat(values.totalAmount.replace(",", "."))),
+          date: formatDate(values.date),
+          installments: Number(parseInt(values.installments, 10)),
+          description: values.description,
+        };
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/card/expense`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        console.log(formData);
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/card/expense`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
           },
-          body: JSON.stringify(formData),
-        },
-      );
+        );
 
-      const data = await response.json();
+        const data = await response.json();
 
-      console.log(data);
-
-      toast.success("Despesa adicionada com sucesso!");
-    } catch (error) {
-      console.log("Erro ao adicionar despesa:", error);
-      toast.error("Erro ao adicionar despesa. Tente novamente.");
-    }
+        toast.success("Despesa adicionada com sucesso!");
+      } catch (error) {
+        console.log("Erro ao adicionar despesa:", error);
+        toast.error("Erro ao adicionar despesa. Tente novamente.");
+      }
+    });
   }
 
   return (
@@ -187,7 +199,7 @@ export default function AddExpanse() {
               />
             </div>
             <Button type="submit" className="w-full">
-              <Plus /> Adicionar despesa
+              {isPending ? <Loading /> : <Plus />} Adicionar despesa
             </Button>
           </form>
         </Form>
