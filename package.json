@@ -9,7 +9,7 @@
     "lint": "biome check ./src",
     "format": "biome check --write ./src",
     "check-types": "tsc --pretty --noEmit",
-    "check-all": "npm run lint && npm run format && npm run check-types && npm run build"
+    "check-all": "npm run format && npm run lint  && npm run check-types && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
