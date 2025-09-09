@@ -1,3 +1,5 @@
+import { getBankListAction } from '@/actions/bank/get-banks-list-action'
+import { getUserBankAction } from '@/actions/bank/get-user-bank-action'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import {
@@ -8,50 +10,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { getSession } from '@/helpers/session'
-import type { BankProps, UserBankProps } from '@/types/banks'
 import { Plus, PlusCircle } from 'lucide-react'
 import Image from 'next/image'
 import SelectBankList from './components/select-bank-list'
 
-async function getBankList() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts`)
-    const data = await response.json()
-
-    return data as BankProps[]
-  } catch (error) {
-    console.log(error)
-    return []
-  }
-}
-
-async function getUserBank(token: string) {
-  if (!token) {
-    throw new Error('Token is required')
-  }
-
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/accounts`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-
-    const data = await response.json()
-
-    return data as UserBankProps[]
-  } catch (error) {
-    console.log(error)
-    return []
-  }
-}
 
 export default async function BanksPage() {
-  const session = await getSession()
-  const token = session?.value || ''
-  const bankList = await getBankList()
-  const userBanks = await getUserBank(session?.value || '')
+  const bankList = await getBankListAction()
+  const userBanks = await getUserBankAction()
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
