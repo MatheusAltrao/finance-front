@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { getTokenAction } from "../session/get-token-action";
 
 export async function bindBankAction(accountId: number) {
@@ -24,7 +25,9 @@ export async function bindBankAction(accountId: number) {
       },
     );
 
-    return await response.json();
+    await response.json();
+
+    revalidatePath("/dashboard/banks");
   } catch (error) {
     console.log(error);
     throw new Error("Erro ao vincular banco. Tente novamente.");
