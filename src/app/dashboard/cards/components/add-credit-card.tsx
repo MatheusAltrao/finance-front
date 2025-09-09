@@ -1,11 +1,6 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Plus } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
+import { addCreditCardAction } from '@/actions/card/add-credit-card-action'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -13,14 +8,17 @@ import Loading from '@/components/ui/loading'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AddCreditCardSchema, type IAddCreditCardSchema } from '@/schemas/card'
 import type { UserBankProps } from '@/types/banks'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Plus } from 'lucide-react'
+import { useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 interface AddCreditCardProps {
   banks: UserBankProps[]
-  token: string | undefined
 }
 
-export default function AddCreditCard({ banks, token }: AddCreditCardProps) {
-  const router = useRouter()
+export default function AddCreditCard({ banks }: AddCreditCardProps) {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<IAddCreditCardSchema>({
@@ -43,21 +41,11 @@ export default function AddCreditCard({ banks, token }: AddCreditCardProps) {
 
     startTransition(async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        })
-
-        const data = await response.json()
-        console.log(data)
+        await addCreditCardAction(formData)
         toast.success('Cartão adicionado com sucesso!')
-        router.refresh()
+        form.reset()
       } catch (error) {
-        console.log('Erro ao adicionar cartão:', error)
+        console.log(error)
         toast.error('Erro ao adicionar cartão. Tente novamente.')
       }
     })
