@@ -1,5 +1,3 @@
-import { Plus, PlusCircle } from 'lucide-react'
-import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import {
@@ -12,6 +10,8 @@ import {
 } from '@/components/ui/dialog'
 import { getSession } from '@/helpers/session'
 import type { BankProps, UserBankProps } from '@/types/banks'
+import { Plus, PlusCircle } from 'lucide-react'
+import Image from 'next/image'
 import SelectBankList from './components/select-bank-list'
 
 async function getBankList() {
@@ -73,7 +73,7 @@ export default async function BanksPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <SelectBankList banks={bankList} token={token} />
+          <SelectBankList banks={bankList} />
         </DialogContent>
       </Dialog>
 

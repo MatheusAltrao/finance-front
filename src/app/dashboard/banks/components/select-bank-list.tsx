@@ -1,20 +1,20 @@
 /** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 'use client'
+import { bindBankAction } from '@/actions/bank/bind-bank-action'
+import { Button } from '@/components/ui/button'
+import Loading from '@/components/ui/loading'
+import type { BankProps } from '@/types/banks'
 import { Check } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import toast from 'react-hot-toast'
-import { Button } from '@/components/ui/button'
-import Loading from '@/components/ui/loading'
-import type { BankProps } from '@/types/banks'
 
 interface SelectBankListProps {
   banks: BankProps[]
-  token: string
 }
 
-export default function SelectBankList({ banks, token }: SelectBankListProps) {
+export default function SelectBankList({ banks }: SelectBankListProps) {
   const router = useRouter()
 
   const [selectedBank, setSelectedBank] = useState<BankProps | null>(null)
@@ -28,18 +28,7 @@ export default function SelectBankList({ banks, token }: SelectBankListProps) {
 
     startTransition(async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts/bind`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            account_id: selectedBank?.id,
-          }),
-        })
-
-        console.log(response)
+        await bindBankAction(selectedBank.id)
         toast.success('Banco vinculado com sucesso!')
         setSelectedBank(null)
         router.refresh()
