@@ -22,10 +22,8 @@ export default async function QuotesPage() {
       </section>
       <section className="space-y-4">
         <div>
-          <h1 className="text-lg font-semibold">Ações</h1>
-          <p className="text-sm text-muted-foreground">
-            Veja as principais cotações de ações atualizadas em tempo real.
-          </p>
+          <h1 className="text-lg font-semibold">Índices</h1>
+          <p className="text-sm text-muted-foreground">Veja os principais índices atualizados em tempo real.</p>
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {stocks.map((stock) => (
