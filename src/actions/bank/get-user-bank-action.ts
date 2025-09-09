@@ -1,26 +1,23 @@
-"use server";
+'use server'
 
-import type { UserBankProps } from "@/types/banks";
-import { getTokenAction } from "../session/get-token-action";
+import type { UserBankProps } from '@/types/banks'
+import { getTokenAction } from '../session/get-token-action'
 
 export async function getUserBankAction() {
   try {
-    const token = await getTokenAction();
+    const token = await getTokenAction()
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/accounts`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/accounts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    );
+    })
 
-    const data = await response.json();
+    const data = await response.json()
 
-    return data as UserBankProps[];
+    return data as UserBankProps[]
   } catch (error) {
-    console.log(error);
-    return [];
+    console.log(error)
+    return []
   }
 }

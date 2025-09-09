@@ -1,4 +1,6 @@
 'use client'
+import { Banknote, CreditCard, Goal, Home, Landmark, PiggyBank, Settings } from 'lucide-react'
+import Link from 'next/link'
 import {
   Sidebar,
   SidebarContent,
@@ -8,8 +10,6 @@ import {
   SidebarMenu,
 } from '@/components/ui/sidebar'
 import type { UserProps } from '@/types/auth'
-import { Banknote, CreditCard, Goal, Home, Landmark, PiggyBank, Settings } from 'lucide-react'
-import Link from 'next/link'
 import SidebarItem from './sidebar-item'
 
 // Menu items.

@@ -1,3 +1,5 @@
+import { Plus, PlusCircle } from 'lucide-react'
+import Image from 'next/image'
 import { getBankListAction } from '@/actions/bank/get-banks-list-action'
 import { getUserBankAction } from '@/actions/bank/get-user-bank-action'
 import { Button } from '@/components/ui/button'
@@ -10,10 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Plus, PlusCircle } from 'lucide-react'
-import Image from 'next/image'
 import SelectBankList from './components/select-bank-list'
-
 
 export default async function BanksPage() {
   const bankList = await getBankListAction()

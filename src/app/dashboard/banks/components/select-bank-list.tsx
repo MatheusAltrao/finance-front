@@ -1,13 +1,13 @@
 'use client'
-import { bindBankAction } from '@/actions/bank/bind-bank-action'
-import { Button } from '@/components/ui/button'
-import Loading from '@/components/ui/loading'
-import type { BankProps } from '@/types/banks'
 import { Check } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import toast from 'react-hot-toast'
+import { bindBankAction } from '@/actions/bank/bind-bank-action'
+import { Button } from '@/components/ui/button'
+import Loading from '@/components/ui/loading'
+import type { BankProps } from '@/types/banks'
 
 interface SelectBankListProps {
   banks: BankProps[]

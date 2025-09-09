@@ -1,33 +1,33 @@
-"use server";
+'use server'
 
-import { revalidatePath } from "next/cache";
-import { getTokenAction } from "../session/get-token-action";
+import { revalidatePath } from 'next/cache'
+import { getTokenAction } from '../session/get-token-action'
 
 interface AddCreditCardFormData {
-  accountId: number;
-  dayClosing: string;
-  dayMaturity: string;
-  limit: number;
+  accountId: number
+  dayClosing: string
+  dayMaturity: string
+  limit: number
 }
 
 export async function addCreditCardAction(formData: AddCreditCardFormData) {
   try {
-    const token = await getTokenAction();
+    const token = await getTokenAction()
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
-    });
+    })
 
-    const data = await response.json();
-    console.log(data);
+    const data = await response.json()
+    console.log(data)
 
-    revalidatePath("/dashboard/cards");
+    revalidatePath('/dashboard/cards')
   } catch (error) {
-    console.log("Erro ao adicionar cartão:", error);
+    console.log('Erro ao adicionar cartão:', error)
   }
 }
