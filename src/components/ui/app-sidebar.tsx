@@ -1,5 +1,4 @@
-import { Banknote, CreditCard, Goal, Home, Landmark, PiggyBank, Settings } from 'lucide-react'
-import Link from 'next/link'
+'use client'
 import {
   Sidebar,
   SidebarContent,
@@ -7,10 +6,11 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import type { UserProps } from '@/types/auth'
+import { Banknote, CreditCard, Goal, Home, Landmark, PiggyBank, Settings } from 'lucide-react'
+import Link from 'next/link'
+import SidebarItem from './sidebar-item'
 
 // Menu items.
 const items = [
@@ -70,14 +70,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <SidebarItem key={item.title} item={item} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
