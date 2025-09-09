@@ -4,9 +4,9 @@ import type { UserBankProps } from "@/types/banks";
 import { getTokenAction } from "../session/get-token-action";
 
 export async function getUserBankAction() {
-  const token = await getTokenAction();
-
   try {
+    const token = await getTokenAction();
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/user/accounts`,
       {

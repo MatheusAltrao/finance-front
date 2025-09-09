@@ -1,4 +1,5 @@
-import { PlusCircle } from 'lucide-react'
+import { getUserBankAction } from '@/actions/bank/get-user-bank-action'
+import { getUserCardListAction } from '@/actions/card/get-user-card-list-action'
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Dialog,
@@ -9,64 +10,13 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { formatCurrency } from '@/helpers/format-currency'
-import { getSession } from '@/helpers/session'
-import type { UserBankProps } from '@/types/banks'
+import { PlusCircle } from 'lucide-react'
 import AddCreditCard from './components/add-credit-card'
 import AddExpanse from './components/add-expanse'
 
-interface CardListResponseProps {
-  id: number
-  userId: number
-  accountId: number
-  dayClosing: string
-  dayMaturity: string
-  limit: string
-  createdAt: string
-  updatedAt: string
-}
-
-async function fetchCardList(token: string) {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cards`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-
-    const data = await response.json()
-    return data as CardListResponseProps[]
-  } catch (error) {
-    console.log(error)
-    return []
-  }
-}
-
-async function getUserBank(token: string) {
-  if (!token) {
-    throw new Error('Token is required')
-  }
-
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/accounts`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-
-    const data = await response.json()
-
-    return data as UserBankProps[]
-  } catch (error) {
-    console.log(error)
-    return []
-  }
-}
-
 export default async function CardsPage() {
-  const session = await getSession()
-  const token = session?.value || ''
-  const cards = await fetchCardList(session?.value || '')
-  const banks = await getUserBank(session?.value || '')
+  const cards = await getUserCardListAction()
+  const banks = await getUserBankAction()
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
@@ -88,7 +38,7 @@ export default async function CardsPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <AddCreditCard banks={banks} token={session?.value} />
+          <AddCreditCard banks={banks} />
         </DialogContent>
       </Dialog>
 
@@ -117,7 +67,7 @@ export default async function CardsPage() {
             </div>
           </div>
           <div>
-            <AddExpanse cardId={card.id} token={token} />
+            <AddExpanse cardId={card.id} />
           </div>
         </Card>
       ))}

@@ -8,9 +8,9 @@ export async function bindBankAction(accountId: number) {
     throw new Error("Account ID is required");
   }
 
-  const token = await getTokenAction();
-
   try {
+    const token = await getTokenAction();
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/accounts/bind`,
       {

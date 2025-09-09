@@ -1,12 +1,5 @@
 'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
-import { Calendar as CalendarIcon, Plus } from 'lucide-react'
-import { useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import type { z } from 'zod'
+import { addCreditCardExpenseAction } from '@/actions/card/add-credit-card-expense-action'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
@@ -23,13 +16,20 @@ import Loading from '@/components/ui/loading'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { formatDate } from '@/helpers/format-date'
 import { AddExpanseSchema, type IAddExpanseSchema } from '@/schemas/expense'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { Calendar as CalendarIcon, Plus } from 'lucide-react'
+import { useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import type { z } from 'zod'
 
 interface AddExpanseProps {
   cardId: number
-  token: string
 }
 
-export default function AddExpanse({ cardId, token }: AddExpanseProps) {
+export default function AddExpanse({ cardId }: AddExpanseProps) {
   const [isPending, startTransition] = useTransition()
   const form = useForm<IAddExpanseSchema>({
     resolver: zodResolver(AddExpanseSchema),
@@ -52,16 +52,7 @@ export default function AddExpanse({ cardId, token }: AddExpanseProps) {
           description: values.description,
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card/expense`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        })
-
-        await response.json()
+        await addCreditCardExpenseAction(formData)
 
         toast.success('Despesa adicionada com sucesso!')
       } catch (error) {

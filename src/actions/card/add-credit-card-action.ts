@@ -11,9 +11,9 @@ interface AddCreditCardFormData {
 }
 
 export async function addCreditCardAction(formData: AddCreditCardFormData) {
-  const token = await getTokenAction();
-
   try {
+    const token = await getTokenAction();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card`, {
       method: "POST",
       headers: {
