@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 'use client'
 import { bindBankAction } from '@/actions/bank/bind-bank-action'
 import { Button } from '@/components/ui/button'
